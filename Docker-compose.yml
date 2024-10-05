@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  webapp:
+    env_file: ".env"
+    build: .
+    depends_on:
+      - db
+    volumes:
+      - ./:/code:ro
+    environment:
+      - DATABASE_URL=postgresql://postgres:dorian01@localhost:5433/movie_service
+    ports:
+      - "8000:8000"
+
+  db:
+      image: postgres:17.0
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+      ports:
+        - "5433:5342"
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=dorian01
+        - POSTGRES_DB=movie_service
+volumes:
+      postgres_data:
