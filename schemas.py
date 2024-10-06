@@ -13,29 +13,6 @@ class MovieBase(BaseModel):
     release_date: date
 
 
-class ReviewBase(BaseModel):
-    id: int
-    movie_id: int
-    user_id: int
-    username: str
-    content: str
-    rating: float
-    created_at: date
-    updated_at: date
-
-
-class LikeBase(BaseModel):
-    id: int
-    movie_id: int
-    user_id: int
-
-
-class WatchBase(BaseModel):
-    id: int
-    movie_id: int
-    user_id: int
-
-
 class GenreBase(BaseModel):
     id: int
     name: str
@@ -47,6 +24,4 @@ class GenreSchema(GenreBase):
 
 class MovieSchema(MovieBase):
     genres: List[GenreBase]
-    reviews: List[ReviewBase]
-    likes: List[LikeBase]
-    watches: List[WatchBase]
+

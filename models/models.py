@@ -28,9 +28,6 @@ class Movie(Base):
     original_language = Column(String, nullable=False)
     release_date = Column(Date, nullable=False)
     genres = relationship("Genre", secondary=movie_genres, backref="movies")
-    reviews = relationship("Review", back_populates='movie')
-    likes = relationship("Like", back_populates='movie')
-    watches = relationship("Watch", back_populates='movie')
 
 
 class Genre(Base):
@@ -38,35 +35,3 @@ class Genre(Base):
 
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String, nullable=False)
-
-
-class Like(Base):
-    __tablename__ = 'likes'
-    id = Column(Integer, primary_key=True, nullable=False)
-    movie_id = Column(Integer, ForeignKey('movies.id'), nullable=False)
-    user_id = Column(Integer, nullable=False)  ## comes from userAuthService kafka event
-    created_at = Column(TIMESTAMP, default=date.today())
-    movie = relationship("Movie", back_populates='likes')
-
-
-class Watch(Base):
-    __tablename__ = 'watches'
-
-    id = Column(Integer, primary_key=True, nullable=False)
-    movie_id = Column(Integer, ForeignKey('movies.id'), nullable=False)
-    user_id = Column(Integer, nullable=False)  ## comes from userAuthService kafka event
-    created_at = Column(TIMESTAMP, default=date.today())
-    movie = relationship("Movie", back_populates='watches')
-
-
-class Review(Base):
-    __tablename__ = 'reviews'
-    id = Column(Integer, primary_key=True, nullable=False)
-    movie_id = Column(Integer, ForeignKey('movies.id'), nullable=False)
-    user_id = Column(Integer, nullable=False)  ## comes from userAuthService kafka event
-    username = Column(String, nullable=False)  ## Comes from the userAuthService kafka event
-    content = Column(Text)
-    rating = Column(Float, nullable=False)
-    created_at = Column(TIMESTAMP, default=date.today())
-    updated_at = Column(TIMESTAMP, default=date.today())
-    movie = relationship("Movie", back_populates='reviews')

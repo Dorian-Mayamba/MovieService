@@ -6,8 +6,6 @@ services:
     build: .
     depends_on:
       - db
-    volumes:
-      - ./:/code:ro
     environment:
       - DATABASE_URL=postgresql://postgres:dorian01@localhost:5433/movie_service
     ports:
